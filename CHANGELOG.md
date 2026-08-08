@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## 2.4.4 (2026-08-03)
+
+* Fixed a timing bug in the REPL where a trailing rest at the end of a line of
+  input was effectively stripped, causing the first note of the next line to
+  play too early (e.g. a quarter note early). The sync offsets used when
+  transmitting incremental REPL updates are now calculated from the player's
+  actual position on each part's track (i.e. where the last note sent to the
+  player ends), which preserves gaps created by trailing rests. The offsets are
+  also computed per part, keyed by stable part ID, so that parts at different
+  positions in the score (including voices) are synchronized correctly.
+
 ## 2.4.3 (2026-05-12)
 
 * Adjusted the JVM options used by the player process to use 75% less memory.
