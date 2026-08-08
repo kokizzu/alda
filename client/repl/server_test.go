@@ -68,9 +68,10 @@ func expectNoteOffsets(t *testing.T, label string, actual []float64, expected ..
 	}
 }
 
-// The bug: entering the same line twice appends the music as expected, but the
-// trailing r4 of the first line is effectively stripped, so the first note of
-// the second line plays a quarter note too early.
+// When the same line is entered twice, the trailing rest at the end of the
+// first line should not be stripped — the first note of the second line should
+// land a quarter note late, not immediately after the last note of the first
+// line.
 //
 // At tempo 240 (250ms per quarter note), the first line's notes are at offsets
 // 0, 500, ..., 3500, and the trailing r4 advances the score's offset to 4000
@@ -131,10 +132,8 @@ func TestUpdateScoreWithInputRestOnlyLine(t *testing.T) {
 	expectNoteOffsets(t, "note after rests", noteOffsetsInBundle(bundle), 1000)
 }
 
-// Regression test for the 2.3.5/4f4f462 voice timing fix (issue #415):
-// repeatedly entering `piano: V1: c d e V2: c d e` should result in the new
-// notes playing immediately after the previous ones, with no accumulating
-// delay.
+// Voices should play immediately on subsequent evaluations, without
+// accumulating delay (issue #415).
 func TestUpdateScoreWithInputVoicesPlayImmediately(t *testing.T) {
 	server := newTestServer()
 	line := "piano: V1: c d e V2: c d e"

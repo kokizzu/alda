@@ -622,9 +622,8 @@ func TestNotes(t *testing.T) {
 	)
 }
 
-// The trailing-rest timing bug (fixed in the REPL) is rooted in the fact that
-// rests advance a part's offset without producing a score event. This test
-// documents that invariant, which is the precondition for the fix.
+// Rests advance a part's offset without producing a score event. This test
+// documents that invariant.
 func TestRestAdvancesOffsetWithoutProducingEvent(t *testing.T) {
 	executeScoreUpdateTestCases(
 		t,

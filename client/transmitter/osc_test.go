@@ -72,8 +72,8 @@ func TestScoreToOSCBundleSyncOffsets(t *testing.T) {
 	// line is the end of the last note: 3500 + 250 = 3750.
 	//
 	// The 8 notes of the second line are at offsets 4000, 4500, ..., 7500. When
-	// we transmit them with a sync offset of 3750 (the player's position), they
-	// should be re-based to 250, 750, ..., 3750, preserving the quarter-note gap
+	// transmitted with a sync offset of 3750 (the player's position), they should
+	// be re-based to 250, 750, ..., 3750, preserving the quarter-note gap
 	// created by the trailing rest.
 	score := parseScore(
 		t,
