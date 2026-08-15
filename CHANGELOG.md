@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## 2.4.5 (2026-08-14)
+
+* Fixed [an issue][issue-421] where, when running the Alda REPL in "server only"
+  mode (`alda repl -s`), interrupting the process with Ctrl-C was inadvertently
+  killing the background player processes.
+
+  Thanks to [Samyra312007] for the fix!
+
 ## 2.4.4 (2026-08-08)
 
 * Fixed [a timing bug in the REPL][issue-421] where a trailing rest at the end
@@ -527,4 +535,5 @@ the [Alda 2 migration guide][migration-guide]!
 [issue-405]: https://github.com/alda-lang/alda/issues/405
 [issue-415]: https://github.com/alda-lang/alda/issues/415
 [issue-416]: https://github.com/alda-lang/alda/issues/416
+[issue-417]: https://github.com/alda-lang/alda/issues/417
 [issue-421]: https://github.com/alda-lang/alda/issues/421
