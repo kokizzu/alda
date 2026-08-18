@@ -87,5 +87,12 @@ func TestLisp(t *testing.T) {
 				),
 			},
 		},
+		parseTestCase{
+			label: "alda-code with plain notes",
+			given: `(alda-code "piano: c d e")`,
+			expectUpdates: []model.ScoreUpdate{
+				lispList(lispSymbol("alda-code"), lispString("piano: c d e")),
+			},
+		},
 	)
 }
