@@ -5,6 +5,7 @@ import (
 
 	"alda.io/client/model"
 	_ "alda.io/client/testing"
+	"github.com/go-test/deep"
 )
 
 func lispSymbol(name string) model.LispSymbol {
@@ -95,4 +96,50 @@ func TestLisp(t *testing.T) {
 			},
 		},
 	)
+}
+
+func TestAldaCodeEquivalence(t *testing.T) {
+	astFromAldaCode, err := Parse(
+		"alda-code", `(alda-code "piano: c d e")`, SuppressSourceContext,
+	)
+	if err != nil {
+		t.Fatal(err)
+	}
+	updatesFromAldaCode, err := astFromAldaCode.Updates()
+	if err != nil {
+		t.Fatal(err)
+	}
+	scoreFromAldaCode := model.NewScore()
+	if err := scoreFromAldaCode.Update(updatesFromAldaCode...); err != nil {
+		t.Fatal(err)
+	}
+
+	astDirect, err := Parse(
+		"direct", "piano: c d e", SuppressSourceContext,
+	)
+	if err != nil {
+		t.Fatal(err)
+	}
+	updatesDirect, err := astDirect.Updates()
+	if err != nil {
+		t.Fatal(err)
+	}
+	scoreDirect := model.NewScore()
+	if err := scoreDirect.Update(updatesDirect...); err != nil {
+		t.Fatal(err)
+	}
+
+	if diff := deep.Equal(scoreDirect.Parts, scoreFromAldaCode.Parts); diff != nil {
+		t.Error("Parts differ between alda-code and direct notation:")
+		for _, d := range diff {
+			t.Error(d)
+		}
+	}
+
+	if diff := deep.Equal(scoreDirect.Events, scoreFromAldaCode.Events); diff != nil {
+		t.Error("Events differ between alda-code and direct notation:")
+		for _, d := range diff {
+			t.Error(d)
+		}
+	}
 }
