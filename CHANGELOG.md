@@ -1,5 +1,19 @@
 # CHANGELOG
 
+## 2.4.6 (2026-08-19)
+
+* Re-adds the `alda-code` Lisp function from Alda 1.x that takes a string and
+  parses it as Alda source:
+
+  ```alda
+  (alda-code "piano: c d e")
+
+  # This is equivalent to:
+  piano: c d e
+  ```
+
+  Thanks to [userjuma] for the contribution!
+
 ## 2.4.5 (2026-08-14)
 
 * Fixed [an issue][issue-421] where, when running the Alda REPL in "server only"
@@ -524,6 +538,7 @@ the [Alda 2 migration guide][migration-guide]!
 [CodeForBeauty]: https://github.com/CodeForBeauty
 [SomedayToday]: https://github.com/SomedayToday
 [Samyra312007]: https://github.com/Samyra312007
+[userjuma]: https://github.com/userjuma
 
 [alda-import-blog-post]: https://blog.djy.io/musicxml-import-and-another-new-alda-features/
 [midi-channel-assignment-discussion]: https://github.com/alda-lang/alda/discussions/447
